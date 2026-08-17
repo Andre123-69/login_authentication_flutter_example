@@ -31,6 +31,15 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 /build/
+.gradle/
+android/.gradle/
+android/build/
+android/app/build/
+
+# Android Studio will place build artifacts here
+/android/app/debug
+/android/app/profile
+/android/app/release
 
 # Symbolication related
 app.*.symbols
