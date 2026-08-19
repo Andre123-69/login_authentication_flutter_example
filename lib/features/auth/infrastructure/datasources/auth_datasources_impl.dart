@@ -38,7 +38,31 @@ class AuthDatasourcesImpl implements AuthDatasource {
 
   @override
   Future<User> register(String email, String password, String fullName) async {
-    throw UnimplementedError();
+    try {
+      final response = await dio.post('/auth/register', data: {
+        'email': email,
+        'password': password,
+        'fullName': fullName,
+      });
+
+      final user = UserMapper.userJsonToEntity(response.data);
+      return user;
+
+    } on DioException catch (e) {
+      if (e.response?.statusCode == 400) {
+        final message = e.response?.data['message'];
+        if (message is List) {
+          throw CustomError(message.join(', '));
+        }
+        throw CustomError(message ?? 'Datos de registro inválidos');
+      }
+      if (e.type == DioExceptionType.connectionTimeout) {
+        throw CustomError('Tiempo de espera expirado');
+      }
+      throw Exception();
+    } catch (e) {
+      throw CustomError('Error inesperado $e');
+    }
   }
 
   @override

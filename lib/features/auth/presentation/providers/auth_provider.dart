@@ -25,7 +25,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
   }): super(AuthState());
 
   Future<void> loginUser(String email, String password) async {
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 1));
 
     try {
       
@@ -48,19 +48,20 @@ class AuthNotifier extends StateNotifier<AuthState> {
   }
 
   Future<void> registerUser(String email, String password, String fullName) async {
+    await Future.delayed(const Duration(milliseconds: 500));
+
     try {
-      
+      final user = await authRepository.register(email, password, fullName);
+      _setLoggedUser(user);
+    } on CustomError catch (e) {
+      logout(errorMessage: e.message);
     } catch (e) {
-      
+      logout(errorMessage: 'Error inesperado');
     }
   }
 
   Future<void> checkAuthStatus(String token) async {
-    try {
-      
-    } catch (e) {
-      
-    }
+    // TODO: Implementar verificación de token
   }
 
   _setLoggedUser(User user){

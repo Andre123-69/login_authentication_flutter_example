@@ -10,6 +10,8 @@ class CustomTextFormField extends StatelessWidget {
   final TextInputType? keyboardType;
   final Function(String)? onChanged;
   final String? Function(String?)? validator;
+  final TextEditingController? controller;
+  final String? initialValue;
 
   const CustomTextFormField({
     super.key, 
@@ -19,7 +21,9 @@ class CustomTextFormField extends StatelessWidget {
     this.obscureText = false,
     this.keyboardType = TextInputType.text,
     this.onChanged, 
-    this.validator, 
+    this.validator,
+    this.controller,
+    this.initialValue,
   });
 
   @override
@@ -48,6 +52,8 @@ class CustomTextFormField extends StatelessWidget {
         ]
       ),
       child: TextFormField(
+        controller: controller,
+        initialValue: initialValue,
         onChanged: onChanged,
         validator: validator,
         obscureText: obscureText,
@@ -57,8 +63,8 @@ class CustomTextFormField extends StatelessWidget {
           floatingLabelStyle: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
           enabledBorder: border,
           focusedBorder: border,
-          errorBorder: border.copyWith( borderSide: BorderSide( color: Colors.transparent )),
-          focusedErrorBorder: border.copyWith( borderSide: BorderSide( color: Colors.transparent )),
+          errorBorder: border.copyWith( borderSide: const BorderSide( color: Colors.transparent )),
+          focusedErrorBorder: border.copyWith( borderSide: const BorderSide( color: Colors.transparent )),
           isDense: true,
           label: label != null ? Text(label!) : null,
           hintText: hint,
