@@ -1,7 +1,7 @@
 
 
 
-import 'package:teslo_shop/features/auth/domain/entities/uder.dart';
+import 'package:teslo_shop/features/auth/domain/entities/user.dart';
 
 class UserMapper {
 

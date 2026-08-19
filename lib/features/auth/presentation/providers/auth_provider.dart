@@ -1,6 +1,6 @@
 
 import 'package:flutter_riverpod/legacy.dart';
-import 'package:teslo_shop/features/auth/domain/entities/uder.dart';
+import 'package:teslo_shop/features/auth/domain/entities/user.dart';
 import 'package:teslo_shop/features/auth/infrastructure/errors/auth_errors.dart';
 import 'package:teslo_shop/features/auth/infrastructure/repositories/auth_repository.impl.dart';
 
