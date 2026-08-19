@@ -1,12 +1,37 @@
 
 
+import 'package:dio/dio.dart';
 import 'package:teslo_shop/features/auth/domain/domain.dart';
-
+import 'package:teslo_shop/config/config.dart';
+import 'package:teslo_shop/features/auth/infrastructure/infraestructure.dart';
 class AuthDatasourcesImpl implements AuthDatasource {
+
+  final dio = Dio(
+    BaseOptions(
+      baseUrl: Environment.apiUrl
+    )
+  );
 
   @override
   Future<User> login(String email, String password) async {
-    throw UnimplementedError();
+    try {
+      final response = await dio.post('/auth/login', data: {
+        'email': email,
+        'password': password
+      });
+      
+      final user = UserMapper.userJsonToEntity(response.data);
+      return user;
+
+    } on DioException catch (e) {
+      if(e.response?.statusCode == 401) {
+        throw WrongCredentials();
+      }
+      if(e.response?.statusCode == 400) {
+        throw WrongCredentials();
+      }
+      throw WrongCredentials();
+    }
   }
 
   @override

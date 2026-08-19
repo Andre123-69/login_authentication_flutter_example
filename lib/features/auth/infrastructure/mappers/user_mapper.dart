@@ -1,0 +1,18 @@
+
+
+
+import 'package:teslo_shop/features/auth/domain/entities/uder.dart';
+
+class UserMapper {
+
+  static User userJsonToEntity(Map<String, dynamic> json) {
+    return User(
+        id: json['id'],
+        email: json['email'],
+        fullName: json['fullName'],
+        roles: List<String>.from(json['roles'].map((role) => role)),
+        token: json['token']
+    );
+  }                       
+
+}
