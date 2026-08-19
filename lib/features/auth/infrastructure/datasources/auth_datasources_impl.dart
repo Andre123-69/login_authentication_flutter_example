@@ -25,12 +25,14 @@ class AuthDatasourcesImpl implements AuthDatasource {
 
     } on DioException catch (e) {
       if(e.response?.statusCode == 401) {
-        throw WrongCredentials();
+        throw CustomError(e.response?.data['message'] ?? 'Credenciales no son correctas');
       }
-      if(e.response?.statusCode == 400) {
-        throw WrongCredentials();
+      if(e.type == DioExceptionType.connectionTimeout) {
+        throw CustomError('Tiempo de espera expirado');
       }
-      throw WrongCredentials();
+      throw Exception();
+    }catch (e){
+      throw CustomError('Error inesperado $e');
     }
   }
 
